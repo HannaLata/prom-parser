@@ -1,6 +1,6 @@
 package com.mainacad.util;
 
-import com.mainacad.Item;
+import com.mainacad.model.Item;
 
 import java.util.List;
 

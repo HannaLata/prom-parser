@@ -1,4 +1,4 @@
-package com.mainacad;
+package com.mainacad.model;
 
 
 import lombok.AllArgsConstructor;

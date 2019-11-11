@@ -1,7 +1,6 @@
 package com.mainacad.service;
 
-import com.mainacad.Item;
-import lombok.*;
+import com.mainacad.model.Item;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -37,7 +36,7 @@ public class PromProductParserService extends Thread {
             String name = extractName(productInfo);
             BigDecimal price = extractPrice(productInfo);
             BigDecimal initPrice = extractInitPrice(productInfo, price);
-            String imageUrl = extractImageUrl(productInfo);
+            String imageUrl = extractImageUrl(document);
             String availability = extractAvailability(productInfo);
 
             Item item = new Item(itemId, name, url, imageUrl, price, initPrice, availability);
@@ -85,12 +84,12 @@ public class PromProductParserService extends Thread {
         return result;
     }
 
-    private String extractImageUrl(Element productInfo) {
+    private String extractImageUrl(Document productInfo) {
         String result = " ";
         try {
             result = productInfo.
-                    getElementsByAttributeValue("data-qaid", "product_image").
-                    first().text();
+                    getElementsByAttributeValue("property", "og:image").
+                    attr("content");
         } catch (Exception e) {
             LOG.severe(String.format("Item image url by URL %s was not extracted", url));
         }
@@ -102,7 +101,7 @@ public class PromProductParserService extends Thread {
         try {
             String resultAsText = productInfo.
                     getElementsByAttributeValue("data-qaid", "product_price").
-                    first().text();
+                    first().attr("data-qaprice");
             result = new BigDecimal (resultAsText).setScale(2, RoundingMode.HALF_UP);
         } catch (Exception e) {
             LOG.severe(String.format("Item price by URL %s was not extracted", url));
@@ -115,8 +114,8 @@ public class PromProductParserService extends Thread {
         try {
             String resultAsText = productInfo.
                     getElementsByAttributeValue("data-qaid", "price_without_discount").
-                    first().text();
-            result = new BigDecimal(resultAsText).setScale(2, RoundingMode.HALF_UP);
+                    first().attr("data-qaprice");
+            result = new BigDecimal (resultAsText).setScale(2, RoundingMode.HALF_UP);
         } catch (Exception e) {
             LOG.severe(String.format("Item init price by URL %s was not extracted", url));
         }

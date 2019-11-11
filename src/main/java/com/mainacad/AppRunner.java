@@ -1,5 +1,6 @@
 package com.mainacad;
 
+import com.mainacad.model.Item;
 import com.mainacad.service.PromProductParserService;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class AppRunner {
     {
 
         List<Item> items = Collections.synchronizedList(new ArrayList<>());
-        String url = "https://prom.ua/p999585650-noutbuk-omen-dc0007ua.html";
+        String url = "https://prom.ua/p991728628-noutbuk-probook-440.html";
 
         PromProductParserService promProductParserService =
                 new PromProductParserService(items, url);
@@ -31,10 +32,11 @@ public class AppRunner {
         if (!items.isEmpty()) {
             LOG.info(items.get(0).getItemId());
             LOG.info(items.get(0).getName());
+            LOG.info(items.get(0).getUrl());
             LOG.info(items.get(0).getAvailability());
             LOG.info(items.get(0).getImageUrl());
-            LOG.info(String.valueOf(items.get(0).getPrice()));
-            LOG.info(String.valueOf(items.get(0).getInitialPrice()));
+            LOG.info(items.get(0).getPrice().toString());
+            LOG.info(items.get(0).getInitialPrice().toString());
         }
 
     }
