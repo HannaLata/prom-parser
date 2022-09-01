@@ -18,7 +18,7 @@
     <maven.compiler.target>11</maven.compiler.target>
     <junit.version>5.5.2</junit.version>
     <lombok.version>1.18.8</lombok.version>
-    <jsoup.version>1.11.3</jsoup.version>
+    <jsoup.version>1.15.3</jsoup.version>
   </properties>
 
   <dependencies>
